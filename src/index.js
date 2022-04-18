@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-// import store from "./store";
+import { Provider } from 'react-redux'
+import store from './redux/store'
 // import './index.css';
 import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { Provider } from "react-redux";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000",
@@ -30,10 +30,10 @@ const client = new ApolloClient({
 ReactDOM.render(
   <BrowserRouter>
     <ApolloProvider client={client}>
-      <App />
-      {/* <Provider store={store}>
+      {/* <App /> */}
+      <Provider store={store}>
         <App />
-      </Provider> */}
+      </Provider>
     </ApolloProvider>
   </BrowserRouter>,
   document.getElementById("root")

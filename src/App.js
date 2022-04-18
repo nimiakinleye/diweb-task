@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Category from "./components/Category";
 import Product from "./components/Product";
 import Error from "./components/Error";
+import Cart from "./components/Cart"
 
 class App extends React.Component {
   // constructor(props) {
@@ -34,7 +35,7 @@ class App extends React.Component {
         <Header
           category={this.state.category}
           changeCategory={this.changeCategory}
-          currency={this.state.currency}
+          // currency={this.state.currency}
           changeCurrency={this.changeCurrency}
         />
         <Routes>
@@ -43,11 +44,11 @@ class App extends React.Component {
             element={
               <Category
                 category={this.state.category}
-                currency={this.state.currency}
               />
             }
           />
           <Route path="/product/:product_id" element={<Product />} />
+          <Route path="/cart" element={<Cart />} />
           {/* <Route path="/category" element={<Categories />} /> */}
           <Route path="*" element={<Error />} />
         </Routes>

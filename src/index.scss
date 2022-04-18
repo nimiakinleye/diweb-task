@@ -1,6 +1,6 @@
 $primary_color: #5ece7b;
 $black: #1d1f22;
-
+$gray: #e5e5e5;
 //reusable styling
 
 .capitalize {
@@ -21,6 +21,11 @@ div {
   box-sizing: border-box;
 }
 
+h1,
+p {
+  margin: 0;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -33,11 +38,21 @@ body {
   font-family: "Raleway", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: $black;
 }
 
 .section {
   padding: 28px 101px;
   margin-top: 100px;
+}
+
+.button_parent {
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-sizing: border-box;
 }
 
 .master_header {
@@ -60,12 +75,15 @@ body {
       top: 104px;
       left: 0;
       z-index: 10;
+      overflow: auto;
+      height: 100vh;
 
       .modal_env {
         width: 100vw;
         height: 100vh;
         background: rgba(57, 55, 72, 0.22);
-        position: absolute;
+        position: fixed;
+        top: 0;
       }
 
       .bag {
@@ -74,7 +92,69 @@ body {
         right: 0;
         margin-right: 101px;
         padding: 20px;
+        padding-top: 0;
         background: #fff;
+        width: 325px;
+        height: 50vh;
+        overflow: auto;
+
+        .title {
+          display: flex;
+          font-weight: 700;
+          font-size: 16px;
+          position: sticky;
+          background: rgba(255, 255, 255, 0.667);
+          backdrop-filter: blur(5px);
+          top: -10px;
+          padding: 12px 0;
+          span {
+            font-weight: 500;
+            font-size: 16px;
+            margin-left: 4px;
+          }
+        }
+
+        .links {
+          display: flex;
+          align-items: center;
+          padding: 5px 0;
+          justify-content: space-between;
+          position: fixed;
+          bottom: -50vh;
+          width: 270px;
+          background: rgba(255, 255, 255, 0.667);
+          backdrop-filter: blur(5px);
+
+          a {
+            text-decoration: none;
+          }
+        }
+
+        .cartItems {
+          .cartItem {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+
+            .text {
+              margin-right: 20px;
+              font-weight: 300;
+              font-size: 16px;
+            }
+            .img_qty {
+              .img_bg {
+                padding: 4px;
+                border: 1px solid $black;
+                .img {
+                  width: 105px;
+                  height: 137px;
+                  background-size: cover;
+                  background-position: center;
+                }
+              }
+            }
+          }
+        }
       }
     }
 
@@ -243,17 +323,21 @@ body {
   }
 
   .name {
-    margin-top: 24px;
     margin-bottom: 4px;
     font-weight: 300;
     font-size: 18px;
+    display: inline;
+
+    &:hover {
+      color: $primary_color;
+      // font-weight: 500;
+    }
   }
 
   .price {
     font-weight: 500;
     font-size: 18px;
-    margin-top: 0;
-    margin-bottom: 0;
+    margin: 12px 0;
   }
 
   .cartIcon {
@@ -340,6 +424,10 @@ body {
   .text {
     grid-column: span 6 / span 6;
 
+    h1 {
+      margin-bottom: 16px;
+    }
+
     .attributes {
       .attribute {
         margin: 40px 0;
@@ -375,6 +463,54 @@ body {
           color: $black;
           font-weight: 700;
           font-size: 18px;
+        }
+      }
+    }
+
+    .price {
+      font-weight: 700;
+      font-size: 24px;
+
+      h1 {
+        color: $black;
+        font-weight: 700;
+        font-size: 18px;
+      }
+    }
+
+    .button {
+      margin: 20px 0 40px 0;
+      max-width: 292px;
+    }
+  }
+}
+
+.cart {
+  .name {
+    font-weight: 700;
+    font-size: 32px;
+    color: $black;
+    margin-bottom: 87px;
+    text-transform: uppercase;
+  }
+
+  .cart_item {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+    border-top: $gray 1px solid;
+
+    .img_qty {
+      .img_bg {
+        border: 1px solid $black;
+        padding: 8px;
+
+        .img {
+          width: 141px;
+          height: 185px;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
         }
       }
     }

@@ -7,7 +7,7 @@ class Categories extends React.Component {
     return (
       <div className="categories section">
         <h1 className="category_name capitalize">{this.props.category}</h1>
-        <ProductCards category={this.props.category} currency={this.props.currency}/>
+        <ProductCards category={this.props.category}/>
       </div>
     );
   }

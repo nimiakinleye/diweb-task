@@ -129,4 +129,6 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+const mapStateToProps = (state) => (state.currency)
+
+export default connect(mapStateToProps)(Header)

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Cart from "../assets/icons/whiteCart.svg";
 import { Link, NavLink } from "react-router-dom";
+import { connect } from "react-redux";
 
 class ProductCard extends React.Component {
   render() {
@@ -11,6 +12,9 @@ class ProductCard extends React.Component {
     const divStyle = {
       backgroundImage: `url(${product.gallery[0]})`,
       backgroundSize: "cover",
+      // backgroundSize: "contain",
+      // backgroundRepeat: "no-repeat",
+      // backgroundPosition: "center",
       width: "354px",
       height: "330px",
       position: "relative",
@@ -36,9 +40,16 @@ class ProductCard extends React.Component {
         </div>
 
         <div
-          style={{ height: "2px", width: "100%", background: "#e6e6e6" }}
+          style={{
+            height: "2px",
+            width: "100%",
+            background: "#e6e6e6",
+            marginBottom: "24px",
+          }}
         ></div>
-        <p className="name">{product.name}</p>
+        <Link to={`/product/${product.id}`} className="no_decoration">
+          <div className="name">{product.name}</div>
+        </Link>
         <p className="price">
           {price.currency.symbol}
           {price.amount}
@@ -81,4 +92,8 @@ class ProductCard extends React.Component {
   }
 }
 
-export default ProductCard;
+const mapStateToProps = (state) => {
+  return state.currency;
+};
+
+export default connect(mapStateToProps)(ProductCard);

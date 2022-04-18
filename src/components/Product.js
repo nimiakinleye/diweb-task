@@ -1,23 +1,22 @@
 import React from "react";
 import { gql } from "@apollo/client";
 import { Query } from "@apollo/client/react/components";
+import { connect } from "react-redux";
+import Button from './Button'
 
 class Product extends React.Component {
   state = {
     productId: window.location.pathname.split("/")[2],
     displayImage: null,
   };
-  componentDidMount () {
-    window.scrollTo(0, 0)
+  componentDidMount() {
+    window.scrollTo(0, 0);
   }
-  // componentDidMount () {
-  //   console.log(window.location.pathname.split("/")[2])
-  // }
   changeDisplayImage = (newImage) => {
     this.setState({
       displayImage: newImage,
-    })
-  }
+    });
+  };
   render() {
     const fetchProduct = gql`
     query fetchProduct {
@@ -53,6 +52,9 @@ class Product extends React.Component {
       if (data.product === null) return <p>No product found</p>;
       else {
         const { product } = data;
+        const price = product.prices.find((price) => {
+          return price.currency.symbol === this.props.currency;
+        });
         // this.changeDisplayImage(product.gallery[0])
         return (
           (
@@ -60,13 +62,29 @@ class Product extends React.Component {
               <div className="images">
                 {product.gallery.map((image, i) => {
                   return (
-                    // console.log(this.state.displayImage),
-                    <img className={this.state.displayImage === image ? 'active': ''} onClick={() => {this.changeDisplayImage(image)}} key={i} src={image} alt="image_gallery" />
+                    <img
+                      className={
+                        this.state.displayImage === image ? "active" : ""
+                      }
+                      onClick={() => {
+                        this.changeDisplayImage(image);
+                      }}
+                      key={i}
+                      src={image}
+                      alt="image_gallery"
+                    />
                   );
                 })}
               </div>
               <div className="image">
-                <img src={this.state.displayImage === null ? product.gallery[0] : this.state.displayImage} alt="main_image" />
+                <img
+                  src={
+                    this.state.displayImage === null
+                      ? product.gallery[0]
+                      : this.state.displayImage
+                  }
+                  alt="main_image"
+                />
               </div>
               <div className="text">
                 <h1>{product.name}</h1>
@@ -90,6 +108,7 @@ class Product extends React.Component {
                               return (
                                 <div
                                   className="color_item cursor_pointer"
+                                  key={item.id}
                                   style={{
                                     width: "40px",
                                     height: "40px",
@@ -103,13 +122,18 @@ class Product extends React.Component {
                     );
                   })}
                 </div>
+                <div className="price uppercase">
+                  <h1>price</h1>
+                  <p>{price.currency.symbol+price.amount}</p>
+                </div>
+                <div onClick={() => this.props.addToCart({product})} className="button">
+                {/* <div onClick={() => this.props.addToCart({name: product.name, id: product.id, brand: product.brand, gallery: product.gallery})} className="button"> */}
+                  <Button text="add to cart"/>
+                </div>
                 <div
                   dangerouslySetInnerHTML={{ __html: product.description }}
                 ></div>
               </div>
-              {/* <h1>{product.name}</h1>
-              <p>{product.id}</p>
-              <em dangerouslySetInnerHTML={{__html: product.description}}></em> */}
             </div>
           )
         );
@@ -124,4 +148,14 @@ class Product extends React.Component {
   }
 }
 
-export default Product;
+const mapStateToProps = (state) => {
+  return state.currency;
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToCart: (product) => dispatch({ type: "ADD_TO_CART", payload: product }),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product);
