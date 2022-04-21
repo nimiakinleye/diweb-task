@@ -2,7 +2,7 @@ import React from "react";
 import { gql } from "@apollo/client";
 import { Query } from "@apollo/client/react/components";
 import { connect } from "react-redux";
-import Button from "./Button";
+import Button from "../components/Button";
 
 class Product extends React.Component {
   state = {

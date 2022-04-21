@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import Header from "./components/Header";
 import Category from "./components/Category";
-import Product from "./components/Product";
+import Product from "./pages/Product";
 import Error from "./components/Error";
-import Cart from "./components/Cart"
+import Cart from "./pages/Cart"
 import Noty from "./components/Notification";
 import { connect } from "react-redux";
 

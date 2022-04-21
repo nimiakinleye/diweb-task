@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Plus from '../assets/icons/plus.svg';
 import Minus from '../assets/icons/minus.svg';
-import CartItem from './CartItem'
+import CartItem from '../components/CartItem'
 
 class Cart extends React.Component {
   componentDidMount() {
