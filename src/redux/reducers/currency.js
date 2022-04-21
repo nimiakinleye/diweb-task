@@ -4,12 +4,14 @@ const initialState = {
   currency: '$'
 }
 
-export default function (state = initialState, action) {
+const currency = (state = initialState, action) => {
   if (action.type === CHANGE_CURRENCY) {
+    console.log(action.payload)
     return {
-      ...state,
-      currency: action.payload
+      currency: action.payload,
     }
   }
   else return state
 }
+
+export default currency;

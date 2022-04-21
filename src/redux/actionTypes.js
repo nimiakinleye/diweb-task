@@ -1,2 +1,7 @@
 export const CHANGE_CURRENCY = "CHANGE_CURRENCY";
 export const ADD_TO_CART = "ADD_TO_CART";
+export const DELETE_FROM_CART = "DELETE_FROM_CART";
+export const INC_CART = "INC_CART";
+export const DEC_CART = "DEC_CART";
+export const THROW_NOTIFICATION = "THROW_NOTIFICATION";
+export const RESET_NOTIFICATION = "RESET_NOTIFICATION";

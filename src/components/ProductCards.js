@@ -15,6 +15,7 @@ class ProductCards extends React.Component {
           name
           inStock
           gallery
+          brand
           attributes {
             id
             name

@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { getCurrencies, getCategories } from "../queries";
 import { Query } from "@apollo/client/react/components";
 import React from "react";
 import { connect } from "react-redux";
@@ -15,7 +15,6 @@ class Header extends React.Component {
     showCartOverlay: false,
   };
   toggleShowCurrency = () => {
-    // console.log(this.state.showCurrency)
     this.setState({
       showCurrency: !this.state.showCurrency,
     });
@@ -25,27 +24,19 @@ class Header extends React.Component {
       showCartOverlay: !this.state.showCartOverlay,
     });
   };
-  print = ( ) => {
-    console.log('hurray, no click outside')
-  }
-  getCategories = gql`
-    query fetchCategories {
-      scandiwebCategories: categories {
-        name
-      }
-    }
-  `;
-  getCurrencies = gql`
-    query fetchCurrencies {
-      currencies {
-        label
-        symbol
-      }
-    }
-  `;
   myCurrencyQuery = ({ data, error, loading }) => {
-    if (error) return <div style={this.currencyStyle} className="currency_dropdown"><p>An error occured while fetching currencies</p></div>;
-    if (loading) return <div style={this.currencyStyle} className="currency_dropdown"><p>Loading Currencies...</p></div>;
+    if (error)
+      return (
+        <div style={this.currencyStyle} className="currency_dropdown">
+          <p>An error occured while fetching currencies</p>
+        </div>
+      );
+    if (loading)
+      return (
+        <div style={this.currencyStyle} className="currency_dropdown">
+          <p>Loading Currencies...</p>
+        </div>
+      );
     else {
       return (
         <CurrencyDropDown
@@ -82,17 +73,17 @@ class Header extends React.Component {
       );
     }
   };
-  currencyStyle= {
-    padding: '0 8px',
-    fontSize: '16px'
-  }
+  currencyStyle = {
+    padding: "0 8px",
+    fontSize: "16px",
+  };
 
   render() {
     return (
       <div className="master_header">
         <div className="header">
           <div>
-            <Query query={this.getCategories}>{this.myQuery}</Query>
+            <Query query={getCategories}>{this.myQuery}</Query>
             {/* <ul className="categories">{categoryList}</ul> */}
             <Link className="logo" to="/">
               <img src={Logo} alt="logo" />
@@ -104,31 +95,48 @@ class Header extends React.Component {
                   onMouseLeave={this.toggleShowCurrency}
                   className="currency cursor_pointer"
                 >
-                  <span>{this.props.currency}</span>
-                  <img className={`currency_dropdown_icon ${this.state.showCurrency ? 'rotate': ''}`} src={Dropdown} alt="dropdown" />
+                  <span>{this.props.currency.currency}</span>
+                  <img
+                    className={`currency_dropdown_icon ${
+                      this.state.showCurrency ? "rotate" : ""
+                    }`}
+                    src={Dropdown}
+                    alt="dropdown"
+                  />
                   {this.state.showCurrency && (
-                    <Query query={this.getCurrencies}>
+                    <Query query={getCurrencies}>
                       {this.myCurrencyQuery}
                     </Query>
                   )}
                 </div>
-                <div className="cart cursor_pointer">
-                  <img
-                    onClick={this.toggleShowCart}
-                    src={CartIcon}
-                    alt="cart"
-                  />
+                <div
+                  onClick={this.toggleShowCart}
+                  className="cart cursor_pointer"
+                >
+                  <img src={CartIcon} alt="cart" />
+                  {this.props.cart.cart.length > 0 && (
+                    <div className="cart_length">
+                      {this.props.cart.cart.length}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </div>
-          {this.state.showCartOverlay && <CartOverlay toggle={this.toggleShowCart} print={this.print} />}
+          {this.state.showCartOverlay && (
+            <CartOverlay toggle={this.toggleShowCart} />
+          )}
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => (state.currency)
+const mapStateToProps = (state) => {
+  return {
+    currency: state.currency,
+    cart: state.cart,
+  };
+};
 
-export default connect(mapStateToProps)(Header)
+export default connect(mapStateToProps)(Header);

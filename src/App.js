@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { Routes, Route, Link } from "react-router-dom";
 import Header from "./components/Header";
@@ -7,6 +6,8 @@ import Category from "./components/Category";
 import Product from "./components/Product";
 import Error from "./components/Error";
 import Cart from "./components/Cart"
+import Noty from "./components/Notification";
+import { connect } from "react-redux";
 
 class App extends React.Component {
   // constructor(props) {
@@ -38,6 +39,7 @@ class App extends React.Component {
           // currency={this.state.currency}
           changeCurrency={this.changeCurrency}
         />
+        {this.props.noty.display && <Noty body={this.props.noty.body} />}
         <Routes>
           <Route
             path="/"
@@ -57,4 +59,10 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return ({
+    noty: state.noty,
+  })
+}
+
+export default connect(mapStateToProps)(App);

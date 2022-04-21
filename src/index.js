@@ -15,18 +15,6 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-// client
-//   .query({
-//     query: gql`
-//       query fetchCategories {
-//         scandiwebCategories: categories {
-//           name
-//         }
-//       }
-//     `,
-//   })
-//   .then((result) => console.log(result, typeof result));
-
 ReactDOM.render(
   <BrowserRouter>
     <ApolloProvider client={client}>
