@@ -41,6 +41,7 @@ const cart = (state = initialState, action) => {
     }
     if (state.cart.length > 0) {
       // const existingItem = state.cart.find((cartItem) => {
+      //   // console.log(JSON.stringify(cartItem.attributes) === JSON.stringify(payload.attributes))
       //   return (
       //     cartItem.product.id === payload.product.id &&
       //     JSON.stringify(cartItem.attributes) ===
@@ -48,22 +49,29 @@ const cart = (state = initialState, action) => {
       //   );
       // });
 
-      // console.log(existingItem);
 
       // if (existingItem === undefined) {
       //   return {
-      //     cart: [...state.cart, {...payload, quantity: 1}],
+      //     cart: [{...payload, quantity: 1}, ...state.cart,],
       //   }
       // }
 
       // if (existingItem !== undefined) {
-      //   state.cart.filter(cartItem => {
-      //     return cartItem.product.id !== existingItem.product.id && JSON.stringify(cartItem.attributes) !== JSON.stringify(existingItem.attributes)
+      //   const newArray = state.cart.map(cartItem => {
+      //     // console.log(JSON.stringify(cartItem.attributes) === JSON.stringify(existingItem.attributes))
+      //     if (cartItem.product.id !== existingItem.product.id && JSON.stringify(cartItem.attributes) === JSON.stringify(existingItem.attributes)) {
+      //       return cartItem
+      //     }
       //   })
+      //   console.log(newArray)
       //   return {
       //     ...state,
-      //     cart: [{...existingItem, quantity: existingItem.quantity + 1}, ...state.cart],
+      //     cart: newArray
       //   }
+      //   // return {
+      //   //   ...state,
+      //   //   cart: [{...existingItem, quantity: existingItem.quantity + 1}, ...state.cart],
+      //   // }
       // }
       return {
         ...state,
