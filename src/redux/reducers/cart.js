@@ -10,21 +10,34 @@ const initialState = {
   cart: [],
 };
 
+// const getTotalAmount = (state) => {
+//   const totalPrice = {};
+//   const priceArray = state.cart.map((cartItem) => {
+//     return cartItem.product.prices.map((price) => {
+//       return {
+//         currency: price.currency.symbol,
+//         amount: price.amount * cartItem.quantity,
+//         quantity: cartItem.quantity,
+//       };
+//     });
+//   });
+//   priceArray.forEach((prices) => {
+//     prices.forEach((price) => {
+//       if (totalPrice[price.currency]) {
+//         totalPrice[price.currency] += price.amount;
+//       } else {
+//         totalPrice[price.currency] = price.amount;
+//       }
+//     });
+//   });
+//   return totalPrice;
+// };
+
 const cart = (state = initialState, action) => {
   const { payload } = action;
   if (action.type === ADD_TO_CART) {
-    const priceArray = state.cart.map((cartItem) => {
-      return (cartItem.product.prices.map(price => {
-        return {currency: price.currency.symbol, price: price.amount}
-      }));
-    })
-    console.log(priceArray)
-    
     if (state.cart.length === 0) {
-      return {
-        ...state,
-        cart: [{ ...payload, quantity: 1 }],
-      };
+      return { ...state, cart: [{ ...payload, quantity: 1 }] };
     }
     if (state.cart.length > 0) {
       // const existingItem = state.cart.find((cartItem) => {
@@ -59,7 +72,6 @@ const cart = (state = initialState, action) => {
     }
   }
   if (action.type === DELETE_FROM_CART) {
-    console.log(payload);
     state.cart.splice(payload, 1);
     return {
       ...state,

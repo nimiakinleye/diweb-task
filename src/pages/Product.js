@@ -39,7 +39,7 @@ class Product extends React.Component {
   setAttributes = (attribute, attributes) => {
     if (this.state.attributes.length === 0) {
       this.updateAttributes(attributes);
-      setTimeout(this.changeAttributeValue, 100, attribute);
+      setTimeout(this.changeAttributeValue, 0, attribute);
     } else {
       this.changeAttributeValue(attribute);
     }
@@ -203,7 +203,7 @@ class Product extends React.Component {
                                     this.setAttributes({
                                       name: attribute.name,
                                       value: item.value,
-                                    });
+                                    }, product.attributes);
                                   }}
                                   className={`color_item cursor_pointer ${
                                     this.state.attributes.length > 0 &&

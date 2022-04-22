@@ -4,11 +4,9 @@ import Button from "./Button";
 import { connect } from "react-redux";
 import Plus from "../assets/icons/plus.svg";
 import Minus from "../assets/icons/minus.svg";
+import TotalAmount from "./TotalAmount";
 
 class CartOverlay extends React.Component {
-  componentDidMount() {
-    console.log(this.props);
-  }
   decreaseCart = (i, quantity) => {
     if (quantity > 1) {
       this.props.cartDecrement(i);
@@ -57,6 +55,7 @@ class CartOverlay extends React.Component {
                                     style={{
                                       width: "20px",
                                       height: "20px",
+                                      border: "1px solid black",
                                       marginLeft: "10px",
                                       background: `${attribute.value}`,
                                     }}
@@ -103,7 +102,8 @@ class CartOverlay extends React.Component {
           </div>
           <div className="total_price">
             <p>Total</p>
-            <p>{this.props.currency.currency}{this.props.cart.totalPrice}</p>
+            <p><TotalAmount /></p>
+            {/* <p>{this.props.currency.currency}{this.props.cart.totalPrice}</p> */}
           </div>
           <div className="links">
             <Link to="/cart">

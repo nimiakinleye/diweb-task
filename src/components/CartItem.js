@@ -9,9 +9,6 @@ class CartItem extends React.Component {
   state = {
     productImage: 0,
   };
-  componentDidMount() {
-    console.log(this.props);
-  }
   decreaseCart = (i, quantity) => {
     if (quantity > 1) {
       this.props.cartDecrement(i);
@@ -56,7 +53,7 @@ class CartItem extends React.Component {
                   {attribute.name === "Color" && (
                     <>
                       <h1>{attribute.name}</h1>
-                      <div style={{width: '20px', height: '20px', marginLeft: '10px', background: `${attribute.value}`}}></div>
+                      <div style={{width: '20px', height: '20px', marginLeft: '10px', border: "1px solid black", background: `${attribute.value}`}}></div>
                     </>
                   )}
                 </div>

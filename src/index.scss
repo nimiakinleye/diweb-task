@@ -53,6 +53,10 @@ body {
   text-transform: uppercase;
   cursor: pointer;
   box-sizing: border-box;
+  width: 100%;
+  max-width: 279px;
+  text-align: center;
+  display: block;
 }
 
 .noty {
@@ -646,6 +650,26 @@ body {
 }
 
 .cart {
+  .totalPrice {
+    .button {
+      width: 279px;
+    }
+    > div {
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      margin: 20px 0;
+
+      p {
+        font-weight: 400;
+      }
+
+      span {
+        margin-left: 10px;
+        font-weight: 700;
+      }
+    }
+  }
   .name {
     font-weight: 700;
     font-size: 32px;
@@ -671,6 +695,7 @@ body {
     justify-content: space-between;
     padding: 20px 0;
     border-top: $gray 1px solid;
+    border-bottom: $gray 1px solid;
 
     .attributes {
       margin-top: 20px;
