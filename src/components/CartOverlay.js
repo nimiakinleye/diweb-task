@@ -36,7 +36,7 @@ class CartOverlay extends React.Component {
                       </div>
                       <div className="price">
                         {price.currency.symbol}
-                        {price.amount}
+                        {price.amount * cartItem.quantity}
                       </div>
                       <div className="attributes">
                         {cartItem.attributes.map((attribute) => {
@@ -100,11 +100,15 @@ class CartOverlay extends React.Component {
                 );
               })}
           </div>
-          <div className="total_price">
-            <p>Total</p>
-            <p><TotalAmount /></p>
-            {/* <p>{this.props.currency.currency}{this.props.cart.totalPrice}</p> */}
-          </div>
+          {cart.length > 0 && (
+            <div className="total_price">
+              <p>Total</p>
+              <p>
+                <TotalAmount />
+              </p>
+              {/* <p>{this.props.currency.currency}{this.props.cart.totalPrice}</p> */}
+            </div>
+          )}
           <div className="links">
             <Link to="/cart">
               <Button type="stroke" text="view bag" />

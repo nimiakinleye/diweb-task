@@ -11,28 +11,29 @@ class ProductCards extends React.Component {
       categoryProducts: category(input: {title: "${this.props.category}"}) {
         name
         products {
+        name
+        inStock
+        brand
+        id
+        gallery
+        description
+        attributes {
           id
           name
-          inStock
-          gallery
-          brand
-          attributes {
+          type
+          items {
+            displayValue
+            value
             id
-            name
-            type
-            items {
-              displayValue
-              value
-              id
-            }
           }
-          prices {
-            currency {
-              label
-              symbol
-            }
-            amount
+        }
+        prices {
+          currency {
+            label
+            symbol
           }
+          amount
+        }
         }
       }
     }

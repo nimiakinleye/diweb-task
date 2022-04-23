@@ -34,7 +34,7 @@ class TotalAmount extends React.Component{
           <>{currency}{Math.round(Number(totalPrice[currency]+this.props.tax))}</>
         }
         {!this.props.tax &&
-          <>{currency}{totalPrice[currency]}</>
+          <>{currency}{Math.round(Number(totalPrice[currency]))}</>
         }
       </>
     )

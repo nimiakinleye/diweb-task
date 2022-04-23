@@ -45,6 +45,7 @@ class ProductCard extends React.Component {
       const attrSelected = this.state.attributes.map((attribute) => {
         return attributes.push(attribute.value);
       });
+      // return console.log(this.state.attributes)
       if (attributes.includes(undefined)) {
         return (
           this.props.throwNoty("Please select attributes"),

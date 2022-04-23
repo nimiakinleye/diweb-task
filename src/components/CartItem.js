@@ -29,8 +29,9 @@ class CartItem extends React.Component {
     }
   };
   render() {
-    const { product } = this.props.cartItem;
-    const { i } = this.props;
+    const {props} = this
+    const { product } = props.cartItem;
+    const { i } = props;
     return (
       <>
         <div className="details">
@@ -38,7 +39,7 @@ class CartItem extends React.Component {
           <p className="brand">{product.brand}</p>
           <p className="price">
             {this.props.price.currency.symbol}
-            {this.props.price.amount}
+            {this.props.price.amount *props.cartItem.quantity}
           </p>
           <div className="attributes">
             {this.props.cartItem.attributes.map((attribute) => {

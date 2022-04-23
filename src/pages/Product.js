@@ -63,6 +63,7 @@ class Product extends React.Component {
       const attrSelected = this.state.attributes.map((attribute) => {
         return attributes.push(attribute.value);
       });
+      // return console.log(this.state.attributes)
       if (product.attributes.length === 0) {
         return (
           this.props.addToCart(product, this.state.attributes),
