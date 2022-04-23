@@ -10,12 +10,6 @@ import Noty from "./components/Notification";
 import { connect } from "react-redux";
 
 class App extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     category: "women"
-  //   }
-  // }
   state = {
     category: "all",
     currency: "$",
@@ -36,7 +30,6 @@ class App extends React.Component {
         <Header
           category={this.state.category}
           changeCategory={this.changeCategory}
-          // currency={this.state.currency}
           changeCurrency={this.changeCurrency}
         />
         {this.props.noty.display && <Noty body={this.props.noty.body} />}

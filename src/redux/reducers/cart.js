@@ -35,10 +35,6 @@ const initialState = {
 
 const cart = (state = initialState, action) => {
   const { payload } = action;
-  // return (
-  //   console.log(payload),
-  //   state
-  // )
   if (action.type === ADD_TO_CART) {
     if (state.cart.length === 0) {
       return { ...state, cart: [{ ...payload, quantity: 1 }] };
@@ -51,8 +47,6 @@ const cart = (state = initialState, action) => {
             JSON.stringify(payload.attributes)
         );
       });
-      
-      console.log(existingItem)
 
 
       if (existingItem === undefined) {
@@ -63,10 +57,6 @@ const cart = (state = initialState, action) => {
       }
 
       if (existingItem !== undefined) {
-        // return (
-        //   console.log(existingItem, state.cart),
-        //   state
-        // )
         const newCart = state.cart.filter(cartItem => {
           return cartItem.product.id !== existingItem.product.id || JSON.stringify(cartItem.attributes) !== JSON.stringify(existingItem.attributes)          
         })

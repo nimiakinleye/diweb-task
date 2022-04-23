@@ -47,7 +47,6 @@ class ProductCards extends React.Component {
             <ProductCard
               key={product.id}
               product={product}
-              // category={this.props.category}
             />
           );
         });

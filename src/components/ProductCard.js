@@ -13,7 +13,6 @@ class ProductCard extends React.Component {
   mapAttributes = () => {
     const attributes = [];
     this.props.product.attributes.forEach((attribute) => {
-      // attributes[`${attribute.id}`] = null
       const attributeProp = { name: attribute.id, value: attribute.value };
       attributes.push(attributeProp);
     });
@@ -45,7 +44,6 @@ class ProductCard extends React.Component {
       const attrSelected = this.state.attributes.map((attribute) => {
         return attributes.push(attribute.value);
       });
-      // return console.log(this.state.attributes)
       if (attributes.includes(undefined)) {
         return (
           this.props.throwNoty("Please select attributes"),

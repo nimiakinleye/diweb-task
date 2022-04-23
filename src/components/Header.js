@@ -54,7 +54,6 @@ class Header extends React.Component {
         <ul>
           {data.scandiwebCategories.map((category, i) => {
             return (
-              // <div key={i}>{category.name}</div>
               <NavLink to="/" key={i} className="no_decoration">
                 <li
                   onClick={() => {

@@ -12,11 +12,7 @@ class Product extends React.Component {
   };
   componentDidMount() {
     window.scrollTo(0, 0);
-    // this.updateAttributes();
   }
-  // componentDidCatch () {
-  //   this.updateAttributes()
-  // }
   changeDisplayImage = (newImage) => {
     this.setState({
       displayImage: newImage,
@@ -63,7 +59,6 @@ class Product extends React.Component {
       const attrSelected = this.state.attributes.map((attribute) => {
         return attributes.push(attribute.value);
       });
-      // return console.log(this.state.attributes)
       if (product.attributes.length === 0) {
         return (
           this.props.addToCart(product, this.state.attributes),
@@ -121,11 +116,9 @@ class Product extends React.Component {
       else {
         const { product } = data;
         const initialAttributes = this.mapAttributes(product.attributes);
-        // this.updateAttributes(product.attributes);
         const price = product.prices.find((price) => {
           return price.currency.symbol === this.props.currency;
         });
-        // this.changeDisplayImage(product.gallery[0])
         return (
           <div className="product section">
             <div className="images">
