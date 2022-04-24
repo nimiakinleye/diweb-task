@@ -16,3 +16,69 @@ export const getCategories = gql`
     }
   }
 `;
+
+export const fetchProduct = (productId) => {
+  return gql`
+    query fetchProduct {
+      product (id: "${productId}") {
+        name
+        brand
+        id
+        gallery
+        description
+        attributes {
+          id
+          name
+          type
+          items {
+            displayValue
+            value
+            id
+          }
+        }
+        prices {
+          currency {
+            label
+            symbol
+          }
+          amount
+        }
+      }
+    }
+    `;
+};
+
+export const productsByCategory = (category) => {
+  return gql`
+    query fetchProducts {
+      categoryProducts: category(input: {title: "${category}"}) {
+        name
+        products {
+        name
+        inStock
+        brand
+        id
+        gallery
+        description
+        attributes {
+          id
+          name
+          type
+          items {
+            displayValue
+            value
+            id
+          }
+        }
+        prices {
+          currency {
+            label
+            symbol
+          }
+          amount
+        }
+        }
+      }
+    }
+  `;
+}

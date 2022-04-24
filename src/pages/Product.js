@@ -1,5 +1,5 @@
 import React from "react";
-import { gql } from "@apollo/client";
+import { fetchProduct } from "../queries";
 import { Query } from "@apollo/client/react/components";
 import { connect } from "react-redux";
 import Button from "../components/Button";
@@ -81,34 +81,6 @@ class Product extends React.Component {
           })
         );
     };
-    const fetchProduct = gql`
-    query fetchProduct {
-      product (id: "${this.state.productId}") {
-        name
-        brand
-        id
-        gallery
-        description
-        attributes {
-          id
-          name
-          type
-          items {
-            displayValue
-            value
-            id
-          }
-        }
-        prices {
-          currency {
-            label
-            symbol
-          }
-          amount
-        }
-      }
-    }
-    `;
     const myProductQuery = ({ data, error, loading }) => {
       if (error) return <p>An error occured</p>;
       if (loading) return <p>Loading...</p>;
@@ -242,7 +214,7 @@ class Product extends React.Component {
     };
     return (
       <>
-        <Query query={fetchProduct}>{myProductQuery}</Query>
+        <Query query={fetchProduct(this.state.productId)}>{myProductQuery}</Query>
         {/* <p>I am the product page for {this.state.productId}</p> */}
       </>
     );
