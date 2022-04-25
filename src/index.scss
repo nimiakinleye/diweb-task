@@ -43,6 +43,8 @@ body {
 .section {
   padding: 28px 20px;
   margin-top: 100px;
+  max-width: 1800px;
+  margin: 0 auto;
 }
 
 .button_parent {
@@ -94,6 +96,8 @@ body {
     z-index: 100;
     box-sizing: border-box;
     padding: 0 10px;
+    
+    margin: 0 auto;
 
     .cart_overlay {
       position: fixed;
@@ -263,6 +267,7 @@ body {
 
     > div {
       width: 100%;
+      max-width: 1800px;
       display: grid;
       grid-template-columns: 3fr 3fr 3fr;
       justify-content: space-between;
