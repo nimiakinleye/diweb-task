@@ -3,7 +3,7 @@ import Cart from "../assets/icons/whiteCart.svg";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-class ProductCard extends React.Component {
+class ProductCard extends React.PureComponent {
   state = {
     attributes: [],
   };

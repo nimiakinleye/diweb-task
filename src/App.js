@@ -9,7 +9,7 @@ import Cart from "./pages/Cart"
 import Noty from "./components/Notification";
 import { connect } from "react-redux";
 
-class App extends React.Component {
+class App extends React.PureComponent {
   state = {
     category: "all",
     currency: "$",

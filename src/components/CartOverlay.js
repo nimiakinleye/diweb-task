@@ -6,7 +6,7 @@ import Plus from "../assets/icons/plus.svg";
 import Minus from "../assets/icons/minus.svg";
 import TotalAmount from "./TotalAmount";
 
-class CartOverlay extends React.Component {
+class CartOverlay extends React.PureComponent {
   decreaseCart = (i, quantity) => {
     if (quantity > 1) {
       this.props.cartDecrement(i);

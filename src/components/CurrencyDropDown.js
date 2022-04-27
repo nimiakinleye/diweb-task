@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-class CurrencyDropDown extends React.Component {
+class CurrencyDropDown extends React.PureComponent {
   render () {
     return (
       <div className="currency_dropdown">

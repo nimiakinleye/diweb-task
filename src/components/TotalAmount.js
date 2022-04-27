@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from 'react-redux'
 
-class TotalAmount extends React.Component{
+class TotalAmount extends React.PureComponent{
   getTotalAmount = () => {
     const { cart } = this.props.cart;
     const totalPrice = {};

@@ -9,7 +9,7 @@ import CurrencyDropDown from "./CurrencyDropDown";
 import CartOverlay from "./CartOverlay";
 import { NavLink, Link } from "react-router-dom";
 
-class Header extends React.Component {
+class Header extends React.PureComponent {
   state = {
     showCurrency: false,
     showCartOverlay: false,

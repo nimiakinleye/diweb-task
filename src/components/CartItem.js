@@ -5,7 +5,7 @@ import Minus from "../assets/icons/minus.svg";
 import Next from "../assets/icons/next.svg";
 import Previous from "../assets/icons/previous.svg";
 
-class CartItem extends React.Component {
+class CartItem extends React.PureComponent {
   state = {
     productImage: 0,
   };

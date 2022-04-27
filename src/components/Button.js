@@ -1,6 +1,6 @@
 import React from "react";
 
-class Button extends React.Component {
+class Button extends React.PureComponent {
   render() {
     const strokeStyle = {
       border: "1px solid #1D1F22",

@@ -4,7 +4,7 @@ import { Query } from "@apollo/client/react/components";
 import { connect } from "react-redux";
 import Button from "../components/Button";
 
-class Product extends React.Component {
+class Product extends React.PureComponent {
   state = {
     productId: window.location.pathname.split("/")[2],
     displayImage: null,

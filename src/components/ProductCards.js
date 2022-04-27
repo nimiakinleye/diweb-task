@@ -4,7 +4,7 @@ import { Query } from "@apollo/client/react/components";
 import ProductCard from "./ProductCard";
 import { Link } from "react-router-dom";
 
-class ProductCards extends React.Component {
+class ProductCards extends React.PureComponent {
   render() {
     const myQuery = ({ data, error, loading }) => {
       if (error) return <p>An error occured</p>;

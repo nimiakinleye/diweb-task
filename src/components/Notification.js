@@ -1,7 +1,7 @@
 import React from "react";
 import info from '../assets/icons/info.svg';
 
-class Noty extends React.Component {
+class Noty extends React.PureComponent {
   render() {
     return (
       <div className="noty">

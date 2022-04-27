@@ -2,7 +2,7 @@ import React from "react";
 
 import ProductCards from './ProductCards'
 
-class Categories extends React.Component {
+class Categories extends React.PureComponent {
   render() {
     return (
       <div className="categories section">

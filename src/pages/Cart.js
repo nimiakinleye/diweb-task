@@ -6,7 +6,7 @@ import CartItem from "../components/CartItem";
 import TotalAmount from "../components/TotalAmount";
 import Button from "../components/Button";
 
-class Cart extends React.Component {
+class Cart extends React.PureComponent {
   state = {
     tax: 15,
   };
