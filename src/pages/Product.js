@@ -60,7 +60,9 @@ class Product extends React.PureComponent {
     const { currency, addToCart, throwNoty, resetNoty } = props;
     const onAddToCart = (product, initialAttributes) => {
       if (!product.inStock) {
-        return (throwNoty("Product is not in stock"), setTimeout(resetNoty, 3000));
+        return (
+          throwNoty("Product is not in stock"), setTimeout(resetNoty, 3000)
+        );
       }
       const attributesArray = [];
       attributes.map((attribute) => {

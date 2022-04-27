@@ -5,62 +5,17 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 class ProductCard extends React.PureComponent {
-  state = {
-    attributes: [],
-  };
-  componentDidMount() {
-    this.updateAttributes();
-  }
-  mapAttributes = () => {
-    const attributes = [];
-    this.props.product.attributes.forEach((attribute) => {
-      const attributeProp = { name: attribute.id, value: attribute.value };
-      attributes.push(attributeProp);
-    });
-    return attributes;
-  };
-  updateAttributes = () => {
-    const attributes = this.mapAttributes();
-    this.setState({
-      attributes: attributes,
-    });
-  };
-  setAttributes = (attribute, attributes = this.state.attributes) => {
-    const findAttribute = attributes.find((thisAttribute) => {
-      return thisAttribute.name === attribute.name;
-    });
-    const finalAttributes = [
-      ...attributes,
-      (findAttribute.value = attribute.value),
-    ];
-    finalAttributes.pop();
-    this.setState({
-      attributes: finalAttributes,
-    });
-  };
   render() {
-    const initialAttributes = this.mapAttributes();
     const addToCart = (product) => {
-      const attributes = [];
-      this.state.attributes.map((attribute) => {
-        return attributes.push(attribute.value);
-      });
-      if (attributes.includes(undefined)) {
+      if (product.attributes.length === 0) {
         return (
-          this.props.throwNoty("Please select attributes"),
+          this.props.addToCart(product, product.attributes),
+          this.props.throwNoty("Item successfully added to cart"),
           setTimeout(this.props.resetNoty, 3000)
         );
-      } else
-        return (
-          this.props.addToCart(product, this.state.attributes),
-          this.props.throwNoty("Item successfully added to cart"),
-          setTimeout(this.props.resetNoty, 3000),
-          this.setState({
-            attributes: initialAttributes,
-          })
-        );
+      }
     };
-    const { props, state, setAttributes } = this;
+    const { props } = this;
     const { product, currency } = props;
     const price = product.prices.find((price) => {
       return price.currency.symbol === currency;
@@ -86,15 +41,24 @@ class ProductCard extends React.PureComponent {
               )}
             </div>
           </Link>
-          <div
-            onClick={() => {
-              addToCart(product);
-            }}
-            className="cartIcon cursor_pointer"
-            data-tooltip="Add to cart"
-          >
-            <img src={Cart} alt="" />
-          </div>
+          {product.attributes.length === 0 && (
+            <div
+              onClick={() => {
+                addToCart(product);
+              }}
+              className="cartIcon cursor_pointer"
+              data-tooltip="Add to cart"
+            >
+              <img src={Cart} alt="" />
+            </div>
+          )}
+          {product.attributes.length > 0 && (
+            <div className="cartIcon cursor_pointer" data-tooltip="Add to cart">
+              <Link to={`/product/${product.id}`}>
+                <img src={Cart} alt="" />
+              </Link>
+            </div>
+          )}
         </div>
 
         <div
@@ -112,73 +76,6 @@ class ProductCard extends React.PureComponent {
           {price.currency.symbol}
           {price.amount}
         </p>
-        <div className="attributes">
-          {product.attributes.map((attribute) => {
-            const findAttr = state.attributes.find((attr) => {
-              return attr.name === attribute.name;
-            });
-            return (
-              <div className="attribute uppercase" key={attribute.id}>
-                <p>{attribute.name}:</p>
-                <div className="items">
-                  {attribute.type !== "swatch" && (
-                    <div className="non_color_items">
-                      {attribute.items.map((item) => {
-                        return (
-                          <div
-                            className={`item ${
-                              this.state.attributes.length > 0 &&
-                              findAttr.value === item.value
-                                ? "active"
-                                : ""
-                            }`}
-                            key={item.id}
-                            onClick={() => {
-                              setAttributes({
-                                name: attribute.name,
-                                value: item.value,
-                              });
-                            }}
-                          >
-                            {item.value}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                  {attribute.type === "swatch" && (
-                    <div className="color_items">
-                      {attribute.items.map((item) => {
-                        return (
-                          <div
-                            key={item.id}
-                            onClick={() => {
-                              setAttributes({
-                                name: attribute.name,
-                                value: item.value,
-                              });
-                            }}
-                            className={`color_item cursor_pointer ${
-                              state.attributes.length > 0 &&
-                              findAttr.value === item.value
-                                ? "active"
-                                : ""
-                            }`}
-                            style={{
-                              width: "15px",
-                              height: "15px",
-                              background: item.value,
-                            }}
-                          ></div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
       </div>
     );
   }
