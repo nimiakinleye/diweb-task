@@ -24,6 +24,7 @@ export const fetchProduct = (productId) => {
         name
         brand
         id
+        inStock
         gallery
         description
         attributes {

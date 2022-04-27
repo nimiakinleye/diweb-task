@@ -59,6 +59,9 @@ class Product extends React.PureComponent {
     const { productId, attributes } = state;
     const { currency, addToCart, throwNoty, resetNoty } = props;
     const onAddToCart = (product, initialAttributes) => {
+      if (!product.inStock) {
+        return throwNoty("Product is not in stock");
+      }
       const attributesArray = [];
       attributes.map((attribute) => {
         return attributesArray.push(attribute.value);
