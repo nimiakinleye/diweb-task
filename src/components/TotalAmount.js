@@ -1,9 +1,10 @@
 import React from "react";
-import {connect} from 'react-redux'
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-class TotalAmount extends React.PureComponent{
+class TotalAmount extends React.PureComponent {
   getTotalAmount = () => {
-    const { cart } = this.props.cart;
+    const { cart } = this.props;
     const totalPrice = {};
     const priceArray = cart.map((cartItem) => {
       return cartItem.product.prices.map((price) => {
@@ -25,25 +26,39 @@ class TotalAmount extends React.PureComponent{
     });
     return totalPrice;
   };
-  render () {
-    const totalPrice = this.getTotalAmount()
-    const {currency} = this.props.currency
+  render() {
+    const totalPrice = this.getTotalAmount();
+    const { props } = this;
+    const { currency, tax } = props;
     return (
       <>
-        {this.props.tax &&
-          <>{currency}{Math.round(Number(totalPrice[currency]+this.props.tax))}</>
-        }
-        {!this.props.tax &&
-          <>{currency}{Math.round(Number(totalPrice[currency]))}</>
-        }
+        {tax && (
+          <>
+            {currency}
+            {Math.round(Number(totalPrice[currency] + tax))}
+          </>
+        )}
+        {!tax && (
+          <>
+            {currency}
+            {Math.round(Number(totalPrice[currency]))}
+          </>
+        )}
       </>
-    )
+    );
   }
 }
+
+TotalAmount.propTypes = {
+  cart: PropTypes.array.isRequired,
+  currency: PropTypes.string,
+  tax: PropTypes.number,
+};
+
 const mapStateToProps = (state) => {
   return {
-    cart: state.cart,
-    currency: state.currency,
-  }
-}
+    cart: state.cart.cart,
+    currency: state.currency.currency,
+  };
+};
 export default connect(mapStateToProps)(TotalAmount);

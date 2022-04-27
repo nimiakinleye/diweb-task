@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Plus from "../assets/icons/plus.svg";
 import Minus from "../assets/icons/minus.svg";
@@ -29,20 +30,20 @@ class CartItem extends React.PureComponent {
     }
   };
   render() {
-    const {props} = this
-    const { product } = props.cartItem;
-    const { i } = props;
+    const { props, state, decreaseCart, prevImage, nextImage } = this;
+    const { i, price, cartItem, cartIncrement } = props;
+    const { product } = cartItem;
     return (
       <>
         <div className="details">
           <h1>{product.name}</h1>
           <p className="brand">{product.brand}</p>
           <p className="price">
-            {this.props.price.currency.symbol}
-            {this.props.price.amount *props.cartItem.quantity}
+            {price.currency.symbol}
+            {price.amount * cartItem.quantity}
           </p>
           <div className="attributes">
-            {this.props.cartItem.attributes.map((attribute) => {
+            {cartItem.attributes.map((attribute) => {
               return (
                 <div key={attribute.name} className="attribute">
                   {attribute.name !== "Color" && (
@@ -54,7 +55,15 @@ class CartItem extends React.PureComponent {
                   {attribute.name === "Color" && (
                     <>
                       <h1>{attribute.name}</h1>
-                      <div style={{width: '20px', height: '20px', marginLeft: '10px', border: "1px solid black", background: `${attribute.value}`}}></div>
+                      <div
+                        style={{
+                          width: "20px",
+                          height: "20px",
+                          marginLeft: "10px",
+                          border: "1px solid black",
+                          background: `${attribute.value}`,
+                        }}
+                      ></div>
                     </>
                   )}
                 </div>
@@ -66,16 +75,16 @@ class CartItem extends React.PureComponent {
           <div className="qtys">
             <div
               onClick={() => {
-                this.props.cartIncrement(i);
+                cartIncrement(i);
               }}
               className="qty"
             >
               <img src={Plus} alt="" />
             </div>
-            <div className="qty_value">{this.props.cartItem.quantity}</div>
+            <div className="qty_value">{props.cartItem.quantity}</div>
             <div
               onClick={() => {
-                this.decreaseCart(i, this.props.cartItem.quantity);
+                decreaseCart(i, props.cartItem.quantity);
               }}
               className="qty"
             >
@@ -86,14 +95,14 @@ class CartItem extends React.PureComponent {
             <div className="next_prev">
               <img
                 onClick={() => {
-                  this.prevImage();
+                  prevImage();
                 }}
                 src={Previous}
                 alt=""
               />
               <img
                 onClick={() => {
-                  this.nextImage(product.gallery.length);
+                  nextImage(product.gallery.length);
                 }}
                 src={Next}
                 alt=""
@@ -102,9 +111,7 @@ class CartItem extends React.PureComponent {
             <div
               className="img"
               style={{
-                backgroundImage: `url(${
-                  product.gallery[this.state.productImage]
-                })`,
+                backgroundImage: `url(${product.gallery[state.productImage]})`,
               }}
             ></div>
           </div>
@@ -113,6 +120,15 @@ class CartItem extends React.PureComponent {
     );
   }
 }
+
+CartItem.propTypes = {
+  cartDecrement: PropTypes.func,
+  cartIncrement: PropTypes.func,
+  deleteFromCart: PropTypes.func,
+  cartItem: PropTypes.object,
+  i: PropTypes.number,
+  price: PropTypes.object,
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {

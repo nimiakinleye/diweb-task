@@ -1,6 +1,7 @@
 import { getCurrencies, getCategories } from "../queries";
 import { Query } from "@apollo/client/react/components";
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Logo from "../assets/logo.svg";
 import CartIcon from "../assets/icons/cart.svg";
@@ -78,11 +79,19 @@ class Header extends React.PureComponent {
   };
 
   render() {
+    const {
+      props,
+      toggleShowCurrency,
+      myQuery,
+      toggleShowCart,
+      myCurrencyQuery,
+    } = this;
+    const { cart, currency } = props;
     return (
       <div className="master_header">
         <div className="header">
           <div>
-            <Query query={getCategories}>{this.myQuery}</Query>
+            <Query query={getCategories}>{myQuery}</Query>
             {/* <ul className="categories">{categoryList}</ul> */}
             <Link className="logo" to="/">
               <img src={Logo} alt="logo" />
@@ -90,11 +99,11 @@ class Header extends React.PureComponent {
             <div className="currency_cart">
               <div>
                 <div
-                  onMouseEnter={this.toggleShowCurrency}
-                  onMouseLeave={this.toggleShowCurrency}
+                  onMouseEnter={toggleShowCurrency}
+                  onMouseLeave={toggleShowCurrency}
                   className="currency cursor_pointer"
                 >
-                  <span>{this.props.currency.currency}</span>
+                  <span>{currency}</span>
                   <img
                     className={`currency_dropdown_icon ${
                       this.state.showCurrency ? "rotate" : ""
@@ -103,27 +112,20 @@ class Header extends React.PureComponent {
                     alt="dropdown"
                   />
                   {this.state.showCurrency && (
-                    <Query query={getCurrencies}>
-                      {this.myCurrencyQuery}
-                    </Query>
+                    <Query query={getCurrencies}>{myCurrencyQuery}</Query>
                   )}
                 </div>
-                <div
-                  onClick={this.toggleShowCart}
-                  className="cart cursor_pointer"
-                >
+                <div onClick={toggleShowCart} className="cart cursor_pointer">
                   <img src={CartIcon} alt="cart" />
-                  {this.props.cart.cart.length > 0 && (
-                    <div className="cart_length">
-                      {this.props.cart.cart.length}
-                    </div>
+                  {cart.length > 0 && (
+                    <div className="cart_length">{cart.length}</div>
                   )}
                 </div>
               </div>
             </div>
           </div>
           {this.state.showCartOverlay && (
-            <CartOverlay toggle={this.toggleShowCart} />
+            <CartOverlay toggle={toggleShowCart} />
           )}
         </div>
       </div>
@@ -131,10 +133,18 @@ class Header extends React.PureComponent {
   }
 }
 
+Header.propTypes = {
+  changeCategory: PropTypes.func.isRequired,
+  changeCurrency: PropTypes.func.isRequired,
+  category: PropTypes.string.isRequired,
+  currency: PropTypes.string,
+  cart: PropTypes.array,
+};
+
 const mapStateToProps = (state) => {
   return {
-    currency: state.currency,
-    cart: state.cart,
+    currency: state.currency.currency,
+    cart: state.cart.cart,
   };
 };
 

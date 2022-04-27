@@ -40,7 +40,7 @@ const cart = (state = initialState, action) => {
       return { ...state, cart: [{ ...payload, quantity: 1 }] };
     }
     if (state.cart.length > 0) {
-      const existingItem = state.cart.find((cartItem, i) => {
+      const existingItem = state.cart.find((cartItem) => {
         return (
           cartItem.product.id === payload.product.id &&
           JSON.stringify(cartItem.attributes) ===

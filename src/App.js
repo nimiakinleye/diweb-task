@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import "./App.css";
 import { Routes, Route} from "react-router-dom";
 import Header from "./components/Header";
@@ -50,6 +51,10 @@ class App extends React.PureComponent {
       </div>
     );
   }
+}
+
+App.propTypes = {
+  noty: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => {

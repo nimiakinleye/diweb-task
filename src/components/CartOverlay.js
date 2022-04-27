@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Button from "./Button";
 import { connect } from "react-redux";
@@ -13,7 +14,9 @@ class CartOverlay extends React.PureComponent {
     } else this.props.deleteFromCart(i);
   };
   render() {
-    const { cart } = this.props.cart;
+    const { props } = this;
+    const { cart, cartIncrement } = props;
+    const { decreaseCart } = this;
     return (
       <div className="cart_overlay">
         <div className="bag">
@@ -25,7 +28,7 @@ class CartOverlay extends React.PureComponent {
               cart.map((cartItem, i) => {
                 const { product } = cartItem;
                 const price = product.prices.find((price) => {
-                  return price.currency.symbol === this.props.currency.currency;
+                  return price.currency.symbol === props.currency;
                 });
                 return (
                   <div className="cartItem" key={i}>
@@ -71,7 +74,7 @@ class CartOverlay extends React.PureComponent {
                       <div className="qtys">
                         <div
                           onClick={() => {
-                            this.props.cartIncrement(i);
+                            cartIncrement(i);
                           }}
                           className="qty"
                         >
@@ -80,7 +83,7 @@ class CartOverlay extends React.PureComponent {
                         <div className="qty_value">{cartItem.quantity}</div>
                         <div
                           onClick={() => {
-                            this.decreaseCart(i, cartItem.quantity);
+                            decreaseCart(i, cartItem.quantity);
                           }}
                           className="qty"
                         >
@@ -106,7 +109,6 @@ class CartOverlay extends React.PureComponent {
               <p>
                 <TotalAmount />
               </p>
-              {/* <p>{this.props.currency.currency}{this.props.cart.totalPrice}</p> */}
             </div>
           )}
           <div className="links">
@@ -118,16 +120,25 @@ class CartOverlay extends React.PureComponent {
             </Link>
           </div>
         </div>
-        <div onClick={this.props.toggle} className="modal_env"></div>
+        <div onClick={props.toggle} className="modal_env"></div>
       </div>
     );
   }
 }
 
+CartOverlay.propTypes = {
+  cartDecrement: PropTypes.func,
+  cartIncrement: PropTypes.func,
+  deleteFromCart: PropTypes.func,
+  cart: PropTypes.array,
+  currency: PropTypes.string,
+  toggle: PropTypes.func,
+};
+
 const mapStateToProps = (state) => {
   return {
-    cart: state.cart,
-    currency: state.currency,
+    cart: state.cart.cart,
+    currency: state.currency.currency,
   };
 };
 

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Cart from "../assets/icons/whiteCart.svg";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -17,9 +18,9 @@ class ProductCard extends React.PureComponent {
       attributes.push(attributeProp);
     });
     return attributes;
-  }
+  };
   updateAttributes = () => {
-    const attributes = this.mapAttributes()
+    const attributes = this.mapAttributes();
     this.setState({
       attributes: attributes,
     });
@@ -32,7 +33,7 @@ class ProductCard extends React.PureComponent {
       ...attributes,
       (findAttribute.value = attribute.value),
     ];
-    const popped = finalAttributes.pop();
+    finalAttributes.pop();
     this.setState({
       attributes: finalAttributes,
     });
@@ -41,7 +42,7 @@ class ProductCard extends React.PureComponent {
     const initialAttributes = this.mapAttributes();
     const addToCart = (product) => {
       const attributes = [];
-      const attrSelected = this.state.attributes.map((attribute) => {
+      this.state.attributes.map((attribute) => {
         return attributes.push(attribute.value);
       });
       if (attributes.includes(undefined)) {
@@ -59,9 +60,10 @@ class ProductCard extends React.PureComponent {
           })
         );
     };
-    const { product } = this.props;
+    const { props, state, setAttributes } = this;
+    const { product, currency } = props;
     const price = product.prices.find((price) => {
-      return price.currency.symbol === this.props.currency;
+      return price.currency.symbol === currency;
     });
     const divStyle = {
       backgroundImage: `url(${product.gallery[0]})`,
@@ -112,70 +114,68 @@ class ProductCard extends React.PureComponent {
         </p>
         <div className="attributes">
           {product.attributes.map((attribute) => {
-            const findAttr = this.state.attributes.find((attr) => {
+            const findAttr = state.attributes.find((attr) => {
               return attr.name === attribute.name;
             });
             return (
-              (
-                <div className="attribute uppercase" key={attribute.id}>
-                  <p>{attribute.name}:</p>
-                  <div className="items">
-                    {attribute.type !== "swatch" && (
-                      <div className="non_color_items">
-                        {attribute.items.map((item) => {
-                          return (
-                            <div
-                              className={`item ${
-                                this.state.attributes.length > 0 &&
-                                findAttr.value === item.value
-                                  ? "active"
-                                  : ""
-                              }`}
-                              key={item.id}
-                              onClick={() => {
-                                this.setAttributes({
-                                  name: attribute.name,
-                                  value: item.value,
-                                });
-                              }}
-                            >
-                              {item.value}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
-                    {attribute.type === "swatch" && (
-                      <div className="color_items">
-                        {attribute.items.map((item) => {
-                          return (
-                            <div
-                              key={item.id}
-                              onClick={() => {
-                                this.setAttributes({
-                                  name: attribute.name,
-                                  value: item.value,
-                                });
-                              }}
-                              className={`color_item cursor_pointer ${
-                                this.state.attributes.length > 0 &&
-                                findAttr.value === item.value
-                                  ? "active"
-                                  : ""
-                              }`}
-                              style={{
-                                width: "15px",
-                                height: "15px",
-                                background: item.value,
-                              }}
-                            ></div>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
+              <div className="attribute uppercase" key={attribute.id}>
+                <p>{attribute.name}:</p>
+                <div className="items">
+                  {attribute.type !== "swatch" && (
+                    <div className="non_color_items">
+                      {attribute.items.map((item) => {
+                        return (
+                          <div
+                            className={`item ${
+                              this.state.attributes.length > 0 &&
+                              findAttr.value === item.value
+                                ? "active"
+                                : ""
+                            }`}
+                            key={item.id}
+                            onClick={() => {
+                              setAttributes({
+                                name: attribute.name,
+                                value: item.value,
+                              });
+                            }}
+                          >
+                            {item.value}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                  {attribute.type === "swatch" && (
+                    <div className="color_items">
+                      {attribute.items.map((item) => {
+                        return (
+                          <div
+                            key={item.id}
+                            onClick={() => {
+                              setAttributes({
+                                name: attribute.name,
+                                value: item.value,
+                              });
+                            }}
+                            className={`color_item cursor_pointer ${
+                              state.attributes.length > 0 &&
+                              findAttr.value === item.value
+                                ? "active"
+                                : ""
+                            }`}
+                            style={{
+                              width: "15px",
+                              height: "15px",
+                              background: item.value,
+                            }}
+                          ></div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
-              )
+              </div>
             );
           })}
         </div>
@@ -183,6 +183,14 @@ class ProductCard extends React.PureComponent {
     );
   }
 }
+
+ProductCard.propTypes = {
+  product: PropTypes.object.isRequired,
+  throwNoty: PropTypes.func.isRequired,
+  resetNoty: PropTypes.func.isRequired,
+  addToCart: PropTypes.func.isRequired,
+  currency: PropTypes.string.isRequired,
+};
 
 const mapStateToProps = (state) => {
   return state.currency;

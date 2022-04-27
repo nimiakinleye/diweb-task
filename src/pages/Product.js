@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { fetchProduct } from "../queries";
 import { Query } from "@apollo/client/react/components";
 import { connect } from "react-redux";
@@ -48,34 +49,40 @@ class Product extends React.PureComponent {
       ...this.state.attributes,
       (findAttribute.value = attribute.value),
     ];
-    const popped = finalAttributes.pop();
+    finalAttributes.pop();
     this.setState({
       attributes: finalAttributes,
     });
   };
   render() {
-    const addToCart = (product, initialAttributes) => {
-      const attributes = [];
-      const attrSelected = this.state.attributes.map((attribute) => {
-        return attributes.push(attribute.value);
+    const { props, state, setAttributes } = this;
+    const { productId, attributes } = state;
+    const { currency, addToCart, throwNoty, resetNoty } = props;
+    const onAddToCart = (product, initialAttributes) => {
+      const attributesArray = [];
+      attributes.map((attribute) => {
+        return attributesArray.push(attribute.value);
       });
       if (product.attributes.length === 0) {
         return (
-          this.props.addToCart(product, this.state.attributes),
-          this.props.throwNoty("Item successfully added to cart"),
+          addToCart(product, this.state.attributes),
+          throwNoty("Item successfully added to cart"),
           setTimeout(this.props.resetNoty, 3000)
         );
       }
-      if ((attributes.includes(undefined) && product.attributes.length > 0) || attributes.length === 0) {
+      if (
+        (attributesArray.includes(undefined) &&
+          product.attributes.length > 0) ||
+        attributesArray.length === 0
+      ) {
         return (
-          this.props.throwNoty("Please select attributes"),
-          setTimeout(this.props.resetNoty, 3000)
+          throwNoty("Please select attributes"), setTimeout(resetNoty, 3000)
         );
       } else
         return (
-          this.props.addToCart(product, this.state.attributes),
-          this.props.throwNoty("Item successfully added to cart"),
-          setTimeout(this.props.resetNoty, 3000),
+          addToCart(product, attributes),
+          throwNoty("Item successfully added to cart"),
+          setTimeout(resetNoty, 3000),
           this.setState({
             attributes: initialAttributes,
           })
@@ -89,7 +96,7 @@ class Product extends React.PureComponent {
         const { product } = data;
         const initialAttributes = this.mapAttributes(product.attributes);
         const price = product.prices.find((price) => {
-          return price.currency.symbol === this.props.currency;
+          return price.currency.symbol === currency;
         });
         return (
           <div className="product section">
@@ -125,7 +132,7 @@ class Product extends React.PureComponent {
               <p>{product.brand}</p>
               <div className="attributes">
                 {product.attributes.map((attribute) => {
-                  const findAttr = this.state.attributes.find((attr) => {
+                  const findAttr = state.attributes.find((attr) => {
                     return attr.name === attribute.name;
                   });
                   return (
@@ -147,7 +154,7 @@ class Product extends React.PureComponent {
                                     );
                                   }}
                                   className={`item ${
-                                    this.state.attributes.length > 0 &&
+                                    attributes.length > 0 &&
                                     findAttr.value === item.value
                                       ? "active"
                                       : ""
@@ -166,10 +173,13 @@ class Product extends React.PureComponent {
                               return (
                                 <div
                                   onClick={() => {
-                                    this.setAttributes({
-                                      name: attribute.name,
-                                      value: item.value,
-                                    }, product.attributes);
+                                    setAttributes(
+                                      {
+                                        name: attribute.name,
+                                        value: item.value,
+                                      },
+                                      product.attributes
+                                    );
                                   }}
                                   className={`color_item cursor_pointer ${
                                     this.state.attributes.length > 0 &&
@@ -198,10 +208,9 @@ class Product extends React.PureComponent {
                 <p>{price.currency.symbol + price.amount}</p>
               </div>
               <div
-                onClick={() => addToCart(product, initialAttributes)}
+                onClick={() => onAddToCart(product, initialAttributes)}
                 className="button"
               >
-                {/* <div onClick={() => this.props.addToCart({name: product.name, id: product.id, brand: product.brand, gallery: product.gallery})} className="button"> */}
                 <Button text="add to cart" />
               </div>
               <div
@@ -214,12 +223,18 @@ class Product extends React.PureComponent {
     };
     return (
       <>
-        <Query query={fetchProduct(this.state.productId)}>{myProductQuery}</Query>
-        {/* <p>I am the product page for {this.state.productId}</p> */}
+        <Query query={fetchProduct(productId)}>{myProductQuery}</Query>
       </>
     );
   }
 }
+
+Product.propTypes = {
+  addToCart: PropTypes.func.isRequired,
+  throwNoty: PropTypes.func.isRequired,
+  resetNoty: PropTypes.func.isRequired,
+  currency: PropTypes.string.isRequired,
+};
 
 const mapStateToProps = (state) => {
   return state.currency;
