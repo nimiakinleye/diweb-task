@@ -47,19 +47,19 @@ class CartOverlay extends React.PureComponent {
                             <div key={attribute.name} className="attribute">
                               {attribute.name !== "Color" && (
                                 <>
-                                  <h1>{attribute.name}</h1>
+                                  {/* <h1>{attribute.name}</h1> */}
                                   <p>{attribute.value}</p>
                                 </>
                               )}
                               {attribute.name === "Color" && (
                                 <>
-                                  <h1>{attribute.name}</h1>
+                                  {/* <h1>{attribute.name}</h1> */}
                                   <div
                                     style={{
                                       width: "20px",
                                       height: "20px",
                                       border: "1px solid black",
-                                      marginLeft: "10px",
+                                      marginRight: "5px",
                                       background: `${attribute.value}`,
                                     }}
                                   ></div>

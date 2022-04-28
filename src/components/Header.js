@@ -81,11 +81,13 @@ class Header extends React.PureComponent {
   render() {
     const {
       props,
+      state,
       toggleShowCurrency,
       myQuery,
       toggleShowCart,
       myCurrencyQuery,
     } = this;
+    const { showCartOverlay } = state;
     const { cart, currency } = props;
     return (
       <div className="master_header">
@@ -120,11 +122,12 @@ class Header extends React.PureComponent {
                   {cart.length > 0 && (
                     <div className="cart_length">{cart.length}</div>
                   )}
+                  {/* {showCartOverlay && <CartOverlay toggle={toggleShowCart} />} */}
                 </div>
               </div>
             </div>
           </div>
-          {this.state.showCartOverlay && (
+          {showCartOverlay && (
             <CartOverlay toggle={toggleShowCart} />
           )}
         </div>

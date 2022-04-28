@@ -4,6 +4,7 @@ import { fetchProduct } from "../queries";
 import { Query } from "@apollo/client/react/components";
 import { connect } from "react-redux";
 import Button from "../components/Button";
+import parse from 'html-react-parser';
 
 class Product extends React.PureComponent {
   state = {
@@ -219,8 +220,9 @@ class Product extends React.PureComponent {
                 <Button text="add to cart" />
               </div>
               <div
-                dangerouslySetInnerHTML={{ __html: product.description }}
-              ></div>
+              >
+                {parse(product.description)}
+              </div>
             </div>
           </div>
         );

@@ -103,13 +103,19 @@ body {
       position: fixed;
       top: 104px;
       left: 0;
+      right: 0;
+      width: 100vw;
+      // max-width: 1800px;
+      margin: 0 auto;
       z-index: 10;
       overflow: auto;
       height: 100vh;
+      width: 100vw;
 
       .modal_env {
         width: 100vw;
         height: 100vh;
+        // max-width: 1800px;
         background: rgba(57, 55, 72, 0.22);
         position: fixed;
         top: 0;
@@ -118,7 +124,8 @@ body {
       .bag {
         z-index: 10;
         position: absolute;
-        right: 20px;
+        right: 10px;
+        margin-right: 10px;
         padding: 20px 0;
         padding-top: 0;
         background: #fff;
@@ -185,15 +192,18 @@ body {
               .price {
                 font-weight: 500;
                 font-size: 16px;
-                margin-bottom: 27px;
+                margin-bottom: 4px;
                 margin-top: 10px;
               }
 
               .attributes {
+                display: flex;
+                flex-wrap: wrap;
                 .attribute {
                   display: flex;
                   align-items: center;
                   margin: 4px 0;
+                  margin-right: 5px;
                   h1 {
                     font-weight: 600;
                     font-size: 14px;
@@ -203,7 +213,7 @@ body {
                     font-family: "Source Sans Pro";
                     font-weight: 400;
                     font-size: 14px;
-                    margin-left: 8px;
+                    // margin-left: 8px;
                     padding: 8px;
                     border: 1px $black solid;
                     background-color: $black;
@@ -845,5 +855,11 @@ body {
 @media (min-width: 1400px) {
   .product_cards {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1800px) {
+  .bag {
+    right: 0;
   }
 }
